@@ -14,7 +14,9 @@ function App() {
     setAnswer("Loading your answer... \n It might take upto 10 seconds");
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyBwRJ-crKN8cyEXD_6Tj36dF9dxJcclZRc",
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
+          import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT
+        }`,
         method: "post",
         data: {
           contents: [{ parts: [{ text: question }] }],
@@ -25,6 +27,7 @@ function App() {
         response["data"]["candidates"][0]["content"]["parts"][0]["text"]
       );
     } catch (error) {
+      console.log(error);
       setAnswer("Sorry - Something went wrong. Please try again!");
     }
 
@@ -40,7 +43,6 @@ function App() {
         >
           <a href="https://github.com/Vishesh-Pandey/chat-ai" target="_blank">
             <h1 className="text-3xl text-center">Chat AI</h1>
-            <p className="text-xs">Using Google Gemini API</p>
           </a>
           <textarea
             required
